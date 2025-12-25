@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18-alpine'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -24,9 +29,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t olzhas-cicd/mybuildimage:latest .'
+                sh 'docker build -t olzhasn/mybuildimage:latest .'
             }
         }
     }
 }
-
